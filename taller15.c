@@ -56,7 +56,7 @@ static void skeleton_daemon()
 	
     /* Change the working directory to the root directory */
     /* or another appropriated directory */
-	chdir("/");
+	//chdir("/");
 
     /* Close all open file descriptors */
     int x;
