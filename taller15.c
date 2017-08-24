@@ -11,6 +11,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <syslog.h>
+#include <fcntl.h>
 
 static void skeleton_daemon()
 {
@@ -50,6 +51,11 @@ static void skeleton_daemon()
     /* Set new file permissions */
     	umask(0);
 
+	int archivo = open("log_cpu.log",O_TRUNC | O_CREAT);
+
+	setsid();
+
+	
     /* Change the working directory to the root directory */
     /* or another appropriated directory */
 	chdir("/");
@@ -71,9 +77,16 @@ int main()
 
 	while (1)
 	{
-        //TODO: Insert daemon code here.
+        	skeleton_daemon();
         	syslog (LOG_NOTICE, "First daemon started.");
         	sleep (20);
+
+		char * buf = (char *)malloc(sizeof(char)*100);
+
+		FILE *fp = popen("top -bn2 | grep '%Cpu' | tail -1", "r");
+		fread(buf,100,1, fp);
+		puts(buf);
+
         	break;
 	}
 
