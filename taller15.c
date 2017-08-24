@@ -16,18 +16,16 @@ static void skeleton_daemon()
 {
 	pid_t pid;
 
-    /* Fork off the parent process */
 	pid = fork();
 
-    /* An error occurred */
 	if (pid < 0){
         exit(EXIT_FAILURE);
 	}
-	    /* Success: Let the parent terminate */
+
 	if (pid > 0){
 		exit(EXIT_SUCCESS);
 	}
-    /* On success: The child process becomes session leader */
+
 	if (setsid() < 0){
 		exit(EXIT_FAILURE);
 	}
